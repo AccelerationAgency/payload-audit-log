@@ -1,7 +1,7 @@
 {
-    "name": "@rumess/payload-audit-log",
+    "name": "accelerationagency/payload-audit-log",
     "version": "1.0.1",
-    "description": "Audit log plugin for PayloadCMS with changes tracking",
+    "description": "Audit log plugin for PayloadCMS with changes tracking (from @rumess)",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",
     "scripts": {
@@ -20,11 +20,11 @@
         "changes",
         "payload-plugin"
     ],
-    "author": "Rumesh Udash <rumesh.udas@gmail.com>",
+    "author": "rodney white <rodney@taa.io>",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/rumess/payload-audit-log.git"
+        "url": "https://github.com/AccelerationAgency/payload-audit-log.git"
     },
     "peerDependencies": {
         "payload": "^2.0.0"

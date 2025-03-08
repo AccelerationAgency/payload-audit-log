@@ -1,16 +1,28 @@
 import { GeneratedTypes } from 'payload';
-import { Config, Plugin } from 'payload/config';
-import { AfterChangeHook, AfterDeleteHook } from 'payload/dist/collections/config/types';
-import { CollectionConfig } from 'payload/types';
+import { Config, Plugin, Access } from 'payload/config';
+import { AfterChangeHook, AfterDeleteHook, CollectionAdminOptions } from 'payload/dist/collections/config/types';
+import { CollectionConfig, GlobalConfig  } from 'payload/types';
 
-interface AuditLogOptions {
+interface AuditLogOptions{
     collections?: (keyof Omit<GeneratedTypes['collections'], 'audit-logs'>)[];
+    //globals?: (keyof Omit<GeneratedTypes['GlobalConfig'], 'audit-logs'>)[];
     includeAuth?: boolean;
+    admin?: CollectionAdminOptions,
+    slug?: string,
+    access?: Access
+
 }
 
 const defaultOptions: AuditLogOptions = {
     collections: [],
+    //globals: [],
     includeAuth: false,
+    slug: 'audit-logs',
+    admin: {
+        useAsTitle: 'action',
+        group: 'Collections'
+    },
+    access: () => true
 };
 
 const auditLogPlugin = (options: AuditLogOptions = {}): Plugin => {
@@ -18,12 +30,13 @@ const auditLogPlugin = (options: AuditLogOptions = {}): Plugin => {
 
     return (config: Config): Config => {
         const auditLogCollection: CollectionConfig = {
-            slug: 'audit-logs',
-            admin: {
-                useAsTitle: 'action',
-            },
+            slug: pluginOptions.slug || 'audit-logs',
+            admin: pluginOptions.admin,
             access: {
-                read: () => true,
+                read: pluginOptions.access || (() => true),
+                create: () => false,
+                update: () => false,
+                delete: () => false,
             },
             fields: [
                 {
@@ -69,6 +82,8 @@ const auditLogPlugin = (options: AuditLogOptions = {}): Plugin => {
             ...(pluginOptions.collections ?? []),
             ...(pluginOptions.includeAuth ? [config.admin?.user ?? 'users'] : []),
         ];
+
+        // TODO add globalconfigs hooks
 
         config.collections = config.collections?.map((collection) => {
             if (collectionsToAudit.includes(collection.slug)) {
