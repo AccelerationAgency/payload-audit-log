@@ -12,7 +12,7 @@ This plugin adds comprehensive audit logging functionality to your PayloadCMS ap
 ## Installation
 
 ```bash
-npm install @rumess/payload-audit-log
+npm install accelerationagency/payload-audit-log
 ```
 
 ## Usage
