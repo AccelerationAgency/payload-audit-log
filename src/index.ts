@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2025 The Acceleration Agency, LLC.
+ * SPDX-License-Identifier: MIT
+ */
 import { GeneratedTypes } from 'payload';
 import { Config, Plugin, Access } from 'payload/config';
 import { AfterChangeHook, AfterDeleteHook, CollectionAdminOptions } from 'payload/dist/collections/config/types';
